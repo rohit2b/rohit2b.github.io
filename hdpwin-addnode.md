@@ -1,3 +1,8 @@
+---
+layout: default
+title: Adding a slave node in HDP Windows
+---
+
 # Guide: Adding a slave node to an existing HDP for Windows cluster.
 
 Hadoop is a horizontally scalable data platform. You add storage and 

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Adding a slave node in HDP Windows
+---
+
 # Guide: Scripting Pre-requisite deploy and setup
 
 ### Configuring Java

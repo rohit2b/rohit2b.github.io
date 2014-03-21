@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>Adding a slave node in HDP Windows</title>
+      <link rel="stylesheet" href="//css/main.css" >
+    </head>
+    <body>
+
+
+  <h1>Adding a slave node in HDP Windows</h1>
+
+  <h1>Guide: Adding a slave node to an existing HDP for Windows cluster.</h1>
+
+<p>Hadoop is a horizontally scalable data platform. You add storage and 
+processing capacity to the system by adding more nodes to the cluster. This 
+guide will outline how to add one node to an existing cluster.</p>
+
+<p>This guide was developed for HDP 2.0 for Windows. The commands and steps were 
+carried out on a Windows Server 2012 R2 set of machines.</p>
+
+<h3>Start with an existing HDP for Windows cluster</h3>
+
+<p>For this guide, I&#39;ve started with a single node HDP 2.0 for Windows cluster. 
+It has every HDP service component installed, all on the single node&#39;s host
+name. It is using Derby for the metastore database.</p>
+
+<p>The cluster properties used for this single node cluster:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">#Log directory
+HDP_LOG_DIR=c:\hadoop\logs
+
+#Data directory
+HDP_DATA_DIR=c:\hdpdata
+
+#hosts
+NAMENODE_HOST=WIN-NJT8GP7961S
+SECONDARY_NAMENODE_HOST=WIN-NJT8GP7961S
+RESOURCEMANAGER_HOST=WIN-NJT8GP7961S
+HIVE_SERVER_HOST=WIN-NJT8GP7961S
+OOZIE_SERVER_HOST=WIN-NJT8GP7961S
+WEBHCAT_HOST=WIN-NJT8GP7961S
+SLAVE_HOSTS=WIN-NJT8GP7961S
+CLIENT_HOSTS=WIN-NJT8GP7961S
+HBASE_MASTER=WIN-NJT8GP7961S
+HBASE_REGIONSERVERS=WIN-NJT8GP7961S
+ZOOKEEPER_HOSTS=WIN-NJT8GP7961S
+FLUME_HOSTS=WIN-NJT8GP7961S
+
+#Database host
+DB_FLAVOR=DERBY
+DB_HOSTNAME=WIN-NJT8GP7961S
+DB_PORT=1527
+
+#Hive properties
+HIVE_DB_NAME=hive
+HIVE_DB_USERNAME=hive
+HIVE_DB_PASSWORD=hive
+
+#Oozie properties
+OOZIE_DB_NAME=oozie
+OOZIE_DB_USERNAME=oozie
+OOZIE_DB_PASSWORD=oozie
+</code></pre></div>
+<h3>Adding a slave node</h3>
+
+<p>A slave node is characterized as a node in the HDP cluster that only runs slave 
+HDP components. In this cluster, that would entail a DataNode, a NodeManager, 
+and an HBase RegionServer.</p>
+
+<p>We want to add one slave node to this existing cluster. The slave node will point to all the master services that are running on the single node cluster.</p>
+
+<p>We take the cluster properties file from host 1, and copy it over to the node that will be added. Then modify the cluster properties file by adding the second node&#39;s host name to the slave host lines.</p>
+
+<p>My second node&#39;s hostname is &#39;WIN-NODE2&#39;:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&gt; hostname
+WIN-NODE2
+</code></pre></div>
+<p>In the cluster properties file, I add to the following lines:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text"># Add to HDFS/YARN slaves
+SLAVE_HOSTS=WIN-NJT8GP7961S,WIN-NODE2
+
+# Add to HBase region servers
+HBASE_REGIONSERVERS=WIN-NJT8GP7961S,WIN-NODE2
+</code></pre></div>
+<p>With these two additions, the cluster properties file on WIN-NODE2 now looks 
+like this:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">#Log directory
+HDP_LOG_DIR=c:\hadoop\logs
+
+#Data directory
+HDP_DATA_DIR=c:\hdpdata
+
+#hosts
+NAMENODE_HOST=WIN-NJT8GP7961S
+SECONDARY_NAMENODE_HOST=WIN-NJT8GP7961S
+RESOURCEMANAGER_HOST=WIN-NJT8GP7961S
+HIVE_SERVER_HOST=WIN-NJT8GP7961S
+OOZIE_SERVER_HOST=WIN-NJT8GP7961S
+WEBHCAT_HOST=WIN-NJT8GP7961S
+SLAVE_HOSTS=WIN-NJT8GP7961S,WIN-NODE2
+CLIENT_HOSTS=WIN-NJT8GP7961S
+HBASE_MASTER=WIN-NJT8GP7961S
+HBASE_REGIONSERVERS=WIN-NJT8GP7961S,WIN-NODE2
+ZOOKEEPER_HOSTS=WIN-NJT8GP7961S
+FLUME_HOSTS=WIN-NJT8GP7961S
+
+#Database host
+DB_FLAVOR=DERBY
+DB_HOSTNAME=WIN-NJT8GP7961S
+DB_PORT=1527
+
+#Hive properties
+HIVE_DB_NAME=hive
+HIVE_DB_USERNAME=hive
+HIVE_DB_PASSWORD=hive
+
+#Oozie properties
+OOZIE_DB_NAME=oozie
+OOZIE_DB_USERNAME=oozie
+OOZIE_DB_PASSWORD=oozie
+</code></pre></div>
+<p>Using this cluster properties file, we install HDP for Windows on the second node:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">msiexec /qn /i &quot;hdp-2.0.6.0.winpkg.msi&quot; /lv &quot;hdp.log&quot; HDP_LAYOUT=&quot;C:\install\clusterproperties.txt&quot; HDP_DIR=&quot;C:\hdp\hadoop&quot; HDP_USER_PASSWORD=&quot;hadoop_user_pass&quot; DESTROY_DATA=&quot;YES&quot;
+</code></pre></div>
+<p>Upon successful completion of the installer, you will have a two node HDP Windows cluster - one with all the master services and slave services, and another with just the slave services.</p>
+
+<p>Only slave services are installed:</p>
+
+<p><img src="assets/hdpwin-add-node-services-pane.png" alt="Only services installed"></p>
+
+<p>Start these services:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">C:\hdp&gt; start_local_hdp_services.cmd
+</code></pre></div>
+<p>The DataNode, NodeManager and RegionServer should start.
+&lt;!--
+You can verify by going to the NameNode UI and looking at the DataNodes:</p>
+
+<p><img src="assets/hdpwin-add-slave-namenode-ui.png" alt="Two Datanodes"></p>
+
+<p><img src="assets/hdpwin-add-slave-resourcemanager-ui.png" alt="Two NodeManagers">
+--&gt;</p>
+
+
+  <nav class="nav-primary" role="navigation" >
+  <ul>
+  
+    <li>
+      <a class="active" href="//hdpwin-addnode.html">Adding a slave node in HDP Windows</a>
+    </li>
+    
+    <li>
+      <a  href="//hdpwin-installprereqs.html">Adding a slave node in HDP Windows</a>
+    </li>
+    
+    <li>
+      <a  href="//index.html">Home</a>
+    </li>
+    
+  </ul>
+</nav>
+
+
+</body>
+</html>
+
