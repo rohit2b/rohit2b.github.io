@@ -74,7 +74,7 @@ Open a powershell window as user 'root'. Then try to read the directories create
     drwxr-xr-x   - root hdfs          0 2014-03-21 14:39 /user/root
 
     > hadoop fs -ls /mapred
-    drwxrwx---   - hadoop hdfs          0 2014-03-21 13:47 /mapred/history
+    drwxr-xrwx   - hadoop hdfs          0 2014-03-21 13:47 /mapred/history
 
 ### Validate by running the Hadoop smoke tests
 
