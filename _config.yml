@@ -1,0 +1,5 @@
+name: Tech Blog
+markdown: redcarpet
+safe: true
+lsi: false
+pygments: true
