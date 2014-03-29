@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Adding a slave node in HDP Windows
+date: 2014-02-04
 ---
 
 # Guide: Adding a slave node to an existing HDP for Windows cluster.
