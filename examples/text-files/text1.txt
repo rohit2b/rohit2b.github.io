@@ -1,0 +1,6 @@
+This is a text file.
+I will use this to learn.
+Text is nice.
+There are multiple lines in here.
+Each line ends with a newline character.
+I like to work with text.

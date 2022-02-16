@@ -1,0 +1,4 @@
+baseURL = 'https://rohit2b.github.io/'
+languageCode = 'en-us'
+title = 'Rohits dev blog'
+theme = "ananke"
