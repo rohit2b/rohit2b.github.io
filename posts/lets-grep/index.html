@@ -1,0 +1,107 @@
+<!doctype html><html lang=en-us>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>Lets Grep | Rohits dev blog</title>
+<meta name=viewport content="width=device-width,minimum-scale=1">
+<meta name=description content="We&rsquo;ve all had to look for text in files. The &ldquo;manual' way to do that is open the text files, one at a time, in some code editor and do a &ldquo;cmd-f&rdquo; or &ldquo;ctrl-f&rdquo; and search for the text. Then, once you&rsquo;ve found the text, you make a note of it. And you repeat this process for each and every file. Imagine the time and manual effort this would take for hundreds of files.">
+<meta name=generator content="Hugo 0.92.2">
+<meta name=robots content="noindex, nofollow">
+<link rel=stylesheet href=/ananke/css/main.min.css>
+<meta property="og:title" content="Lets Grep">
+<meta property="og:description" content="We&rsquo;ve all had to look for text in files. The &ldquo;manual' way to do that is open the text files, one at a time, in some code editor and do a &ldquo;cmd-f&rdquo; or &ldquo;ctrl-f&rdquo; and search for the text. Then, once you&rsquo;ve found the text, you make a note of it. And you repeat this process for each and every file. Imagine the time and manual effort this would take for hundreds of files.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rohit2b.github.io/posts/lets-grep/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2022-02-16T12:46:29-08:00">
+<meta property="article:modified_time" content="2022-02-16T12:46:29-08:00">
+<meta itemprop=name content="Lets Grep">
+<meta itemprop=description content="We&rsquo;ve all had to look for text in files. The &ldquo;manual' way to do that is open the text files, one at a time, in some code editor and do a &ldquo;cmd-f&rdquo; or &ldquo;ctrl-f&rdquo; and search for the text. Then, once you&rsquo;ve found the text, you make a note of it. And you repeat this process for each and every file. Imagine the time and manual effort this would take for hundreds of files."><meta itemprop=datePublished content="2022-02-16T12:46:29-08:00">
+<meta itemprop=dateModified content="2022-02-16T12:46:29-08:00">
+<meta itemprop=wordCount content="435">
+<meta itemprop=keywords content><meta name=twitter:card content="summary">
+<meta name=twitter:title content="Lets Grep">
+<meta name=twitter:description content="We&rsquo;ve all had to look for text in files. The &ldquo;manual' way to do that is open the text files, one at a time, in some code editor and do a &ldquo;cmd-f&rdquo; or &ldquo;ctrl-f&rdquo; and search for the text. Then, once you&rsquo;ve found the text, you make a note of it. And you repeat this process for each and every file. Imagine the time and manual effort this would take for hundreds of files.">
+</head>
+<body class="ma0 avenir bg-near-white">
+<header>
+<div class=bg-black>
+<nav class="pv3 ph3 ph4-ns" role=navigation>
+<div class="flex-l justify-between items-center center">
+<a href=/ class="f3 fw2 hover-white no-underline white-90 dib">
+Rohits dev blog
+</a>
+<div class="flex-l items-center">
+<div class=ananke-socials>
+</div>
+</div>
+</div>
+</nav>
+</div>
+</header>
+<main class=pb7 role=main>
+<article class="flex-l flex-wrap justify-between mw8 center ph3">
+<header class="mt4 w-100">
+<aside class="instapaper_ignoref b helvetica tracked">
+POSTS
+</aside>
+<div id=sharing class="mt3 ananke-socials">
+</div>
+<h1 class="f1 athelas mt3 mb1">Lets Grep</h1>
+<time class="f6 mv4 dib tracked" datetime=2022-02-16T12:46:29-08:00>February 16, 2022</time>
+</header>
+<div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>We&rsquo;ve all had to look for text in files. The &ldquo;manual' way to do that is open the text files, one at a time, in some code editor and do a &ldquo;cmd-f&rdquo; or &ldquo;ctrl-f&rdquo; and search for the text. Then, once you&rsquo;ve found the text, you make a note of it. And you repeat this process for each and every file. Imagine the time and manual effort this would take for hundreds of files.</p>
+<p>There&rsquo;s automation tooling available to assist you in accomplishing this!</p>
+<p>Meet &lsquo;grep&rsquo;. &lsquo;grep&rsquo; is a command line tool that is available on Linux and Linux based Operating Systems - such as Mac OS X. &lsquo;grep&rsquo; allows you to search for a text string across multiple files. Let&rsquo;s look into how.</p>
+<h2 id=check-if-grep-exists-on-your-machine>Check if grep exists on your machine</h2>
+<p>Open up a Terminal on your machine.</p>
+<pre tabindex=0><code>$ grep
+usage: grep [-abcdDEFGHhIiJLlMmnOopqRSsUVvwXxZz] [-A num] [-B num] [-C[num]]
+	[-e pattern] [-f file] [--binary-files=value] [--color=when]
+	[--context[=num]] [--directories=action] [--label] [--line-buffered]
+	[--null] [pattern] [file ...]
+</code></pre><h2 id=search-for-a-text-string-in-one-file>Search for a text string in one file</h2>
+<p>There&rsquo;s sample files to work with - in &lsquo;examples/text-files&rsquo;. Download and copy these files into a directory on your machine. In these examples we&rsquo;ll assume that directory is &lsquo;myFiles&rsquo;.</p>
+<pre tabindex=0><code>$ cd myFiles
+</code></pre><pre tabindex=0><code>$ grep 'text' text1.txt
+</code></pre><p>The output of the command will list the two lines that contain the word <code>text</code>. Note that all the other lines that don&rsquo;t include the word are not outputted.</p>
+<pre tabindex=0><code>This is a text file.
+I like to work with text.
+</code></pre><p>If you grep in a file that does not have the word in it, then the output will be empty.</p>
+<pre tabindex=0><code>$ grep 'text' text3.txt
+
+</code></pre><h2 id=search-for-a-text-string-in-multiple-files>Search for a text string in multiple files</h2>
+<p>You can specify multiple files to search through. <code>grep</code> will output the matching lines, with the text filename for the matching line included.</p>
+<pre tabindex=0><code>$ grep 'text' text1.txt text2.txt text3.txt
+
+text1.txt:This is a text file.
+text1.txt:I like to work with text.
+text2.txt:This is a second text file.
+</code></pre><h2 id=search-for-a-text-string-in-all-files-in-a-directory>Search for a text string in all files in a directory</h2>
+<p>If you want to search through all files, but don&rsquo;t want to specify each one, you can search through all files in a directory.</p>
+<p>Here, you search through all files in the current directory, where the current directory is specificed by <code>.</code>. You&rsquo;ll use the recursive <code>-R</code> option flag to specify that you want to search through all files in this directory. You&rsquo;ll get a similar output where the filename and the matching lines of text are outputted.</p>
+<pre tabindex=0><code>$ grep -R 'text' .
+
+./text1.txt:This is a text file.
+./text1.txt:I like to work with text.
+./text2.txt:This is a second text file.
+</code></pre><ul class=pa0>
+</ul>
+<div class="mt6 instapaper_ignoref">
+</div>
+</div>
+<aside class="w-30-l mt6-l">
+</aside>
+</article>
+</main>
+<footer class="bg-black bottom-0 w-100 pa3" role=contentinfo>
+<div class="flex justify-between">
+<a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href=https://rohit2b.github.io/>
+&copy; Rohits dev blog 2022
+</a>
+<div>
+<div class=ananke-socials>
+</div></div>
+</div>
+</footer>
+</body>
+</html>
