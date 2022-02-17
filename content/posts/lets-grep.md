@@ -3,11 +3,11 @@ title: "Lets Grep"
 date: 2022-02-16T12:46:29-08:00
 ---
 
-We've all had to look for text in files. The "manual' way to do that is open the text files, one at a time, in some code editor and do a "cmd-f" or "ctrl-f" and search for the text. Then, once you've found the text, you make a note of it. And you repeat this process for each and every file. Imagine the time and manual effort this would take for hundreds of files.
+We've all had to look for text in files. The "manual" way to do that is open the text files, one at a time, in some code editor and do a `cmd-f` or `ctrl-f` and search for the text. Then, once you've found the text, you make a note of it. And you repeat this process for each and every file. Imagine the time and manual effort this would take for hundreds of files.
 
 There's automation tooling available to assist you in accomplishing this!
 
-Meet 'grep'. 'grep' is a command line tool that is available on Linux and Linux based Operating Systems - such as Mac OS X. 'grep' allows you to search for a text string across multiple files. Let's look into how.
+Meet `grep`. `grep` is a command line tool that is available on Linux and Linux based Operating Systems - such as Mac OS X. `grep` allows you to search for a text string across multiple files. Let's look into how.
 
 ## Check if grep exists on your machine
 
@@ -71,3 +71,18 @@ $ grep -R 'text' .
 ./text1.txt:I like to work with text.
 ./text2.txt:This is a second text file.
 ```
+
+## Case insensitive
+
+Sometimes, you'll want to find all text matches irregardless of upper or lower case. For that, you'll use the `-i` option flag.
+
+```
+$ grep -iR 'text' .
+
+./text1.txt:This is a text file.
+./text1.txt:Text is nice.
+./text1.txt:I like to work with text.
+./text2.txt:This is a second text file.
+```
+
+Note the second line output - that is `Text` with an upper case `T`.
